@@ -4,6 +4,8 @@ import { ProgressIndicator } from './ProgressIndicator';
 import { questions } from './questions';
 import { comprehensiveQuestions } from './comprehensiveQuestions';
 import type { UserPreferences } from '@/types';
+import { analytics } from '@/utils/analytics';
+import { useAuth } from '@/contexts/AuthContext';
 
 interface QuestionnaireProps {
   onComplete: (preferences: UserPreferences) => void;
@@ -13,6 +15,7 @@ interface QuestionnaireProps {
 export const Questionnaire: React.FC<QuestionnaireProps> = ({ onComplete, mode = 'basic' }) => {
   const [currentStep, setCurrentStep] = useState(0);
   const [answers, setAnswers] = useState<Record<string, string | string[]>>({});
+  const { user, updateUser } = useAuth();
   
   // Get active questions based on mode and conditional logic
   const activeQuestions = useMemo(() => {
@@ -40,15 +43,19 @@ export const Questionnaire: React.FC<QuestionnaireProps> = ({ onComplete, mode =
   }, [mode, answers, currentStep]);
 
   const handleAnswer = (value: string | string[]) => {
+    const questionId = activeQuestions[currentStep].id;
     setAnswers(prev => ({
       ...prev,
-      [activeQuestions[currentStep].id]: value
+      [questionId]: value
     }));
+    // Track answer in analytics
+    analytics.track('question_answered', 'engagement', `${questionId}_${mode}`);
   };
 
   const handleNext = () => {
     if (currentStep < activeQuestions.length - 1) {
       setCurrentStep(prev => prev + 1);
+      analytics.track('questionnaire_step', 'engagement', `step_${currentStep + 1}`);
     } else {
       // Complete questionnaire
       const preferences: UserPreferences = {
@@ -75,6 +82,28 @@ export const Questionnaire: React.FC<QuestionnaireProps> = ({ onComplete, mode =
           supportLevel: answers.supportLevel as string
         })
       };
+      analytics.track('questionnaire_completed', 'conversion', mode);
+      
+      // Save to user's search history if logged in
+      if (user && updateUser) {
+        const searchEntry = {
+          timestamp: new Date().toISOString(),
+          mode,
+          preferences,
+          recommendationCount: 0 // Will be updated when results load
+        };
+        
+        const searchHistory = user.preferences?.searchHistory || [];
+        updateUser({
+          preferences: {
+            ...user.preferences,
+            searchHistory: [...searchHistory, searchEntry],
+            savedRecommendations: user.preferences?.savedRecommendations || [],
+            emailNotifications: user.preferences?.emailNotifications ?? true
+          }
+        });
+      }
+      
       onComplete(preferences);
     }
   };
@@ -93,9 +122,9 @@ export const Questionnaire: React.FC<QuestionnaireProps> = ({ onComplete, mode =
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-12 px-4">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-gray-900 dark:to-gray-800 py-12 px-4">
       <div className="max-w-4xl mx-auto">
-        <h1 className="text-4xl font-bold text-center mb-8 bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
+        <h1 className="text-4xl font-bold text-center mb-8 bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-blue-400 dark:to-indigo-400 bg-clip-text text-transparent">
           {mode === 'comprehensive' ? 'Comprehensive AI Analysis' : 'Find Your Perfect AI Tool'}
         </h1>
         

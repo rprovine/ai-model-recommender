@@ -3,6 +3,8 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import type { Recommendation } from '@/types';
+import { analytics } from '@/utils/analytics';
+import { useAuth } from '@/contexts/AuthContext';
 import { 
   Globe, 
   Smartphone, 
@@ -12,7 +14,9 @@ import {
   HardDrive,
   ExternalLink,
   ChevronDown,
-  ChevronUp
+  ChevronUp,
+  Bookmark,
+  BookmarkCheck
 } from 'lucide-react';
 
 interface ModelCardProps {
@@ -27,6 +31,22 @@ export const ModelCard: React.FC<ModelCardProps> = ({
   onToggleExpand 
 }) => {
   const { model, reasons, estimatedMonthlyCost, matchPercentage } = recommendation;
+  const { user, saveRecommendation, removeSavedRecommendation } = useAuth();
+  
+  const isSaved = user?.preferences?.savedRecommendations?.includes(model.id);
+
+  const handleToggleSave = () => {
+    if (!user) {
+      alert('Please sign in to save recommendations');
+      return;
+    }
+    
+    if (isSaved) {
+      removeSavedRecommendation(model.id);
+    } else {
+      saveRecommendation([model.id]);
+    }
+  };
 
   const getPriceDisplay = () => {
     if (model.pricing.free) {
@@ -156,25 +176,57 @@ export const ModelCard: React.FC<ModelCardProps> = ({
       <CardFooter className="flex justify-between">
         <div className="flex gap-2">
           <Button size="sm" asChild>
-            <a href={model.website} target="_blank" rel="noopener noreferrer">
+            <a 
+              href={model.website} 
+              target="_blank" 
+              rel="noopener noreferrer"
+              onClick={() => analytics.track('model_visit', 'engagement', model.id)}
+            >
               <Globe className="w-4 h-4 mr-1" />
               Visit Site
             </a>
           </Button>
           {model.documentation && (
             <Button size="sm" variant="outline" asChild>
-              <a href={model.documentation} target="_blank" rel="noopener noreferrer">
+              <a 
+                href={model.documentation} 
+                target="_blank" 
+                rel="noopener noreferrer"
+                onClick={() => analytics.track('model_docs', 'engagement', model.id)}
+              >
                 <ExternalLink className="w-4 h-4 mr-1" />
                 Docs
               </a>
             </Button>
           )}
         </div>
-        {onToggleExpand && (
+        <div className="flex items-center gap-2">
           <Button
             size="sm"
+            variant={isSaved ? "default" : "outline"}
+            onClick={handleToggleSave}
+            className="gap-1"
+          >
+            {isSaved ? (
+              <>
+                <BookmarkCheck className="w-4 h-4" />
+                Saved
+              </>
+            ) : (
+              <>
+                <Bookmark className="w-4 h-4" />
+                Save
+              </>
+            )}
+          </Button>
+          {onToggleExpand && (
+            <Button
+            size="sm"
             variant="ghost"
-            onClick={onToggleExpand}
+            onClick={() => {
+              onToggleExpand();
+              analytics.track('model_expand', 'engagement', model.id, expanded ? 0 : 1);
+            }}
             className="gap-1"
           >
             {expanded ? (
@@ -186,8 +238,9 @@ export const ModelCard: React.FC<ModelCardProps> = ({
                 More <ChevronDown className="w-4 h-4" />
               </>
             )}
-          </Button>
-        )}
+            </Button>
+          )}
+        </div>
       </CardFooter>
     </Card>
   );
