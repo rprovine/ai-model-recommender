@@ -51,6 +51,11 @@ User Preferences:
 - Integration Methods: ${preferences.integrationMethod.join(', ')}
 - Usage Volume: ${preferences.usageVolume}
 - Special Requirements: ${preferences.specialRequirements.join(', ') || 'None'}
+${preferences.industry ? `- Industry: ${preferences.industry}` : ''}
+${preferences.teamSize ? `- Team Size: ${preferences.teamSize}` : ''}
+${preferences.dataSensitivity ? `- Data Sensitivity: ${preferences.dataSensitivity}` : ''}
+${preferences.currentTools ? `- Current Tools: ${preferences.currentTools.join(', ')}` : ''}
+${preferences.performanceNeeds ? `- Performance Needs: ${preferences.performanceNeeds}` : ''}
 
 Eligible AI Models:
 ${JSON.stringify(modelSummaries, null, 2)}

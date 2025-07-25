@@ -7,8 +7,7 @@ import {
   Globe, 
   Smartphone, 
   Code, 
-  Shield, 
-  Zap,
+  Shield,
   Users,
   HardDrive,
   ExternalLink,
@@ -113,16 +112,18 @@ export const ModelCard: React.FC<ModelCardProps> = ({
           )}
         </div>
 
-        <div className="space-y-2">
+        <div className="space-y-3">
           <h4 className="text-sm font-semibold">Why we recommend this:</h4>
-          <ul className="space-y-1">
-            {reasons.slice(0, expanded ? reasons.length : 3).map((reason, index) => (
-              <li key={index} className="text-sm text-muted-foreground flex items-start">
-                <Zap className="w-3 h-3 mr-2 mt-0.5 text-primary shrink-0" />
-                {reason}
-              </li>
+          <div className="space-y-3">
+            {reasons.slice(0, expanded ? reasons.length : 2).map((reason, index) => (
+              <div key={index} className="text-sm text-muted-foreground bg-muted/30 rounded-md p-3 border-l-4 border-primary/30">
+                <p className="leading-relaxed">{reason}</p>
+              </div>
             ))}
-          </ul>
+            {!expanded && reasons.length > 2 && (
+              <p className="text-xs text-muted-foreground italic">+{reasons.length - 2} more reasons...</p>
+            )}
+          </div>
         </div>
 
         {expanded && (
