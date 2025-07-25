@@ -15,7 +15,7 @@ By participating in this project, you agree to abide by our Code of Conduct:
 1. Fork the repository
 2. Clone your fork:
    ```bash
-   git clone https://github.com/yourusername/ai-model-recommender.git
+   git clone https://github.com/rprovine/ai-model-recommender.git
    ```
 3. Create a new branch:
    ```bash
@@ -173,7 +173,7 @@ We welcome feature requests! Please:
 
 ## ❓ Questions?
 
-- Open a [GitHub Discussion](https://github.com/yourusername/ai-model-recommender/discussions)
+- Open a [GitHub Discussion](https://github.com/rprovine/ai-model-recommender/discussions)
 - Email: support@lenilani.com
 
 Thank you for contributing! 🎉

@@ -42,7 +42,7 @@ An intelligent web application that helps users find the perfect AI tool for the
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/yourusername/ai-model-recommender.git
+git clone https://github.com/rprovine/ai-model-recommender.git
 cd ai-model-recommender
 ```
 
@@ -215,8 +215,8 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 📞 Support
 
-- **Issues**: [GitHub Issues](https://github.com/yourusername/ai-model-recommender/issues)
-- **Discussions**: [GitHub Discussions](https://github.com/yourusername/ai-model-recommender/discussions)
+- **Issues**: [GitHub Issues](https://github.com/rprovine/ai-model-recommender/issues)
+- **Discussions**: [GitHub Discussions](https://github.com/rprovine/ai-model-recommender/discussions)
 - **Email**: support@lenilani.com
 
 ---
