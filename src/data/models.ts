@@ -1443,7 +1443,7 @@ export const aiModels: AIModel[] = [
     id: 'spline-ai',
     vendor: 'Spline',
     name: 'Spline AI',
-    category: 'creative',
+    category: 'image',
     description: 'AI-powered 3D design and animation',
     strengths: [
       'Text to 3D',

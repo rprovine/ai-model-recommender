@@ -107,8 +107,6 @@ function generateStaticRecommendations(models: AIModel[], preferences: UserPrefe
   });
 
   // Sort by score and return top recommendations
-  const isComprehensive = preferences.primaryUseCase.includes('comprehensive');
-  
   return scoredModels
     .sort((a, b) => b.score - a.score)
     .filter(rec => isComprehensive ? rec.score > 20 : rec.score > 40) // Lower threshold for comprehensive
@@ -156,8 +154,13 @@ function calculateBudgetScore(model: AIModel, budget: string): number {
   
   if (pricing.free) lowestPrice = 0;
   if (pricing.subscription) {
-    const subPrice = Math.min(...pricing.subscription.map(s => s.price));
-    lowestPrice = Math.min(lowestPrice, subPrice);
+    const prices = pricing.subscription
+      .map(s => s.price)
+      .filter(p => typeof p === 'number') as number[];
+    if (prices.length > 0) {
+      const subPrice = Math.min(...prices);
+      lowestPrice = Math.min(lowestPrice, subPrice);
+    }
   }
   
   switch (budget) {
@@ -197,7 +200,9 @@ function calculatePriorityScore(model: AIModel, priorities: string[]): number {
   priorities.forEach(priority => {
     switch (priority) {
       case 'cost':
-        if (model.pricing.free || (model.pricing.subscription && model.pricing.subscription[0].price <= 20)) {
+        if (model.pricing.free || (model.pricing.subscription && 
+            typeof model.pricing.subscription[0].price === 'number' && 
+            model.pricing.subscription[0].price <= 20)) {
           matchCount += 1;
         }
         break;
@@ -267,7 +272,8 @@ function calculateRequirementsScore(model: AIModel, requirements: string[]): num
         if (model.dataPrivacy.level === 'high') matchCount += 1;
         break;
       case 'support':
-        if (model.pricing.subscription && model.pricing.subscription.some(s => s.price > 50)) {
+        if (model.pricing.subscription && model.pricing.subscription.some(s => 
+            typeof s.price === 'number' && s.price > 50)) {
           matchCount += 1;
         }
         break;
@@ -292,12 +298,17 @@ function calculateEstimatedCost(model: AIModel, volume: string): { min: number; 
   }
 
   if (model.pricing.subscription) {
-    const prices = model.pricing.subscription.map(s => s.price);
-    if (minCost === 0 && model.pricing.free) {
-      maxCost = Math.min(...prices);
-    } else {
-      minCost = Math.min(...prices);
-      maxCost = Math.max(...prices);
+    const prices = model.pricing.subscription
+      .map(s => s.price)
+      .filter(p => typeof p === 'number') as number[];
+    
+    if (prices.length > 0) {
+      if (minCost === 0 && model.pricing.free) {
+        maxCost = Math.min(...prices);
+      } else {
+        minCost = Math.min(...prices);
+        maxCost = Math.max(...prices);
+      }
     }
   }
 

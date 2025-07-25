@@ -1,6 +1,6 @@
 import React from 'react';
 import type { AIModel } from '@/types';
-import { Check, X, Minus } from 'lucide-react';
+import { Check, X } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 
 interface ComparisonTableProps {

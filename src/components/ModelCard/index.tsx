@@ -2,13 +2,12 @@ import React from 'react';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import type { AIModel, Recommendation } from '@/types';
+import type { Recommendation } from '@/types';
 import { 
   Globe, 
   Smartphone, 
   Code, 
   Shield, 
-  DollarSign, 
   Zap,
   Users,
   HardDrive,
@@ -28,7 +27,7 @@ export const ModelCard: React.FC<ModelCardProps> = ({
   expanded = false,
   onToggleExpand 
 }) => {
-  const { model, score, reasons, estimatedMonthlyCost, matchPercentage } = recommendation;
+  const { model, reasons, estimatedMonthlyCost, matchPercentage } = recommendation;
 
   const getPriceDisplay = () => {
     if (model.pricing.free) {

@@ -23,6 +23,11 @@ export async function getAIRecommendations(
     return [];
   }
 
+  // Skip API call for comprehensive mode (too many models)
+  if (preferences.primaryUseCase.includes('comprehensive')) {
+    return [];
+  }
+
   try {
     const modelSummaries = eligibleModels.map(model => ({
       id: model.id,
