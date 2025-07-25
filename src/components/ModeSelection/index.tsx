@@ -47,18 +47,18 @@ export const ModeSelection: React.FC<ModeSelectionProps> = ({ onModeSelect }) =>
               <div className="w-16 h-16 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
                 <Globe className="w-8 h-8 text-white" />
               </div>
-              <CardTitle className="text-2xl mb-2">Comprehensive Directory</CardTitle>
-              <CardDescription>Browse all available AI tools in one place</CardDescription>
+              <CardTitle className="text-2xl mb-2">Comprehensive Analysis</CardTitle>
+              <CardDescription>Deep dive into your specific requirements</CardDescription>
             </CardHeader>
             <CardContent className="space-y-3">
               <div className="text-sm text-gray-600 space-y-2">
-                <p>✓ Explore 28+ AI tools across all categories</p>
-                <p>✓ No questionnaire needed - dive right in</p>
-                <p>✓ Filter by category, price, features, and more</p>
-                <p>✓ Compare multiple tools side by side</p>
+                <p>✓ Extended 15+ question assessment</p>
+                <p>✓ Industry-specific recommendations</p>
+                <p>✓ Technical requirements analysis</p>
+                <p>✓ Detailed workflow integration guidance</p>
               </div>
               <Button className="w-full mt-4" size="lg" variant="secondary">
-                Browse All Tools
+                Start Detailed Analysis
               </Button>
             </CardContent>
           </Card>

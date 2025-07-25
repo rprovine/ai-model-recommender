@@ -9,6 +9,7 @@ import { generateRecommendations } from '@/utils/recommendation-engine';
 
 function App() {
   const [currentView, setCurrentView] = useState<'mode-selection' | 'questionnaire' | 'results' | 'loading'>('mode-selection');
+  const [mode, setMode] = useState<'basic' | 'comprehensive'>('basic');
   const [recommendations, setRecommendations] = useState<Recommendation[]>([]);
   const [userPreferences, setUserPreferences] = useState<UserPreferences | null>(null);
 
@@ -39,37 +40,8 @@ function App() {
   };
 
   const handleModeSelect = async (selectedMode: 'basic' | 'comprehensive') => {
-    
-    if (selectedMode === 'comprehensive') {
-      // Skip questionnaire for comprehensive mode
-      setCurrentView('loading');
-      const comprehensivePreferences: UserPreferences = {
-        primaryUseCase: ['comprehensive'],
-        experienceLevel: 'intermediate',
-        budgetRange: '100+',
-        priorityFactors: [],
-        integrationMethod: [],
-        usageVolume: 'moderate',
-        specialRequirements: []
-      };
-      setUserPreferences(comprehensivePreferences);
-      
-      // Generate comprehensive results
-      setTimeout(async () => {
-        try {
-          const recs = await generateRecommendations(comprehensivePreferences);
-          setRecommendations(recs);
-          setCurrentView('results');
-        } catch (error) {
-          console.error('Failed to generate comprehensive results:', error);
-          setRecommendations([]);
-          setCurrentView('results');
-        }
-      }, 100);
-    } else {
-      // Go to questionnaire for basic mode
-      setCurrentView('questionnaire');
-    }
+    setMode(selectedMode);
+    setCurrentView('questionnaire');
   };
 
   const handleStartOver = () => {
@@ -85,7 +57,7 @@ function App() {
           <ModeSelection onModeSelect={handleModeSelect} />
         )}
         {currentView === 'questionnaire' && (
-          <Questionnaire onComplete={handleQuestionnaireComplete} />
+          <Questionnaire onComplete={handleQuestionnaireComplete} mode={mode} />
         )}
         {currentView === 'loading' && (
           <LoadingScreen />

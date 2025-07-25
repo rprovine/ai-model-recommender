@@ -11,6 +11,19 @@ export interface UserPreferences {
   integrationMethod: IntegrationMethod[];
   usageVolume: UsageVolume;
   specialRequirements: string[];
+  // Comprehensive mode fields
+  industry?: string;
+  contentTypes?: string[];
+  programmingLanguages?: string[];
+  teamSize?: string;
+  currentTools?: string[];
+  workflowIntegration?: string[];
+  outputFormats?: string[];
+  languages?: string[];
+  dataSensitivity?: string;
+  performanceNeeds?: string;
+  customization?: string;
+  supportLevel?: string;
 }
 
 export interface PricingTier {

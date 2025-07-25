@@ -76,12 +76,10 @@ export const Results: React.FC<ResultsProps> = ({ recommendations, preferences, 
         <div className="flex justify-between items-center mb-8">
           <div>
             <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
-              {preferences.primaryUseCase.includes('comprehensive') ? 'Comprehensive AI Tool Directory' : 'Your AI Tool Recommendations'}
+              Your AI Tool Recommendations
             </h1>
             <p className="text-muted-foreground mt-2">
-              {preferences.primaryUseCase.includes('comprehensive') 
-                ? `Explore ${recommendations.length} AI tools across all categories`
-                : `Based on your preferences, we found ${recommendations.length} great matches`}
+              Based on your {preferences.industry ? 'comprehensive' : 'personalized'} preferences, we found {recommendations.length} great matches
             </p>
           </div>
           <div className="flex gap-2">

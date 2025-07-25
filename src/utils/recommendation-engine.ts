@@ -22,11 +22,6 @@ export async function generateRecommendations(preferences: UserPreferences): Pro
 }
 
 function filterEligibleModels(models: AIModel[], preferences: UserPreferences): AIModel[] {
-  // If comprehensive option is selected, return all models
-  if (preferences.primaryUseCase.includes('comprehensive')) {
-    return models;
-  }
-  
   return models.filter(model => {
     // Budget filter - hard constraint
     const budgetScore = calculateBudgetScore(model, preferences.budgetRange);
@@ -41,8 +36,6 @@ function filterEligibleModels(models: AIModel[], preferences: UserPreferences): 
 }
 
 function generateStaticRecommendations(models: AIModel[], preferences: UserPreferences): Recommendation[] {
-  const isComprehensive = preferences.primaryUseCase.includes('comprehensive');
-  
   const scoredModels = models.map(model => {
     let score = 0;
     const reasons: string[] = [];
@@ -50,11 +43,8 @@ function generateStaticRecommendations(models: AIModel[], preferences: UserPrefe
     // Use case matching (30 points max)
     const useCaseScore = calculateUseCaseScore(model, preferences.primaryUseCase);
     score += useCaseScore * 30;
-    if (useCaseScore > 0.7 && !isComprehensive) {
-      reasons.push(`Excellent for ${preferences.primaryUseCase.filter(u => u !== 'comprehensive').join(', ')}`);
-    }
-    if (isComprehensive) {
-      reasons.push(`${model.category.charAt(0).toUpperCase() + model.category.slice(1)} AI tool`);
+    if (useCaseScore > 0.7) {
+      reasons.push(`Excellent for ${preferences.primaryUseCase.join(', ')}`);
     }
 
     // Budget compatibility (25 points max)
@@ -83,6 +73,31 @@ function generateStaticRecommendations(models: AIModel[], preferences: UserPrefe
     const requirementsScore = calculateRequirementsScore(model, preferences.specialRequirements);
     score += requirementsScore * 5;
 
+    // Comprehensive mode additional scoring
+    if (preferences.industry && preferences.contentTypes && preferences.programmingLanguages) {
+      // Industry-specific scoring (10 points max)
+      const industryScore = calculateIndustryScore(model, preferences);
+      score += industryScore * 10;
+      
+      // Team size compatibility (5 points max)
+      if (preferences.teamSize) {
+        const teamScore = calculateTeamScore(model, preferences.teamSize);
+        score += teamScore * 5;
+      }
+      
+      // Data sensitivity requirements (10 points max)
+      if (preferences.dataSensitivity) {
+        const sensitivityScore = calculateDataSensitivityScore(model, preferences.dataSensitivity);
+        score += sensitivityScore * 10;
+      }
+      
+      // Language support (5 points max)
+      if (preferences.languages && preferences.languages.length > 0) {
+        const languageScore = calculateLanguageScore(model, preferences.languages);
+        score += languageScore * 5;
+      }
+    }
+
     // Add specific strength reasons
     if (preferences.priorityFactors.includes('privacy') && model.dataPrivacy.level === 'high') {
       reasons.push('Strong privacy protection');
@@ -109,17 +124,12 @@ function generateStaticRecommendations(models: AIModel[], preferences: UserPrefe
   // Sort by score and return top recommendations
   return scoredModels
     .sort((a, b) => b.score - a.score)
-    .filter(rec => isComprehensive ? rec.score > 20 : rec.score > 40) // Lower threshold for comprehensive
-    .slice(0, isComprehensive ? 30 : 10); // Show more results for comprehensive
+    .filter(rec => rec.score > 40) // Only show decent matches
+    .slice(0, 10); // Top 10 recommendations
 }
 
 function calculateUseCaseScore(model: AIModel, useCases: string[]): number {
   if (useCases.length === 0) return 0;
-  
-  // If comprehensive option is selected, give all models a moderate score
-  if (useCases.includes('comprehensive')) {
-    return 0.7;
-  }
   
   let matchCount = 0;
   const modelUseCases = model.useCases.join(' ').toLowerCase();
@@ -326,4 +336,89 @@ function calculateEstimatedCost(model: AIModel, volume: string): { min: number; 
   }
 
   return { min: Math.round(minCost), max: Math.round(maxCost) };
+}
+
+// Comprehensive mode scoring functions
+function calculateIndustryScore(model: AIModel, preferences: UserPreferences): number {
+  const industry = preferences.industry;
+  const useCases = model.useCases.join(' ').toLowerCase();
+  const strengths = model.strengths.join(' ').toLowerCase();
+  
+  switch (industry) {
+    case 'tech':
+      if (model.category === 'code' || model.apiAvailable) return 1;
+      return 0.5;
+    case 'healthcare':
+      if (model.dataPrivacy.level === 'high' && strengths.includes('complian')) return 1;
+      return 0.3;
+    case 'finance':
+      if (model.dataPrivacy.level === 'high' && strengths.includes('security')) return 1;
+      return 0.4;
+    case 'education-industry':
+      if (useCases.includes('education') || useCases.includes('teaching')) return 1;
+      return 0.5;
+    case 'marketing':
+      if (model.category === 'text' || model.category === 'image') return 0.9;
+      return 0.4;
+    case 'legal':
+      if (model.dataPrivacy.level === 'high' && strengths.includes('accuracy')) return 1;
+      return 0.3;
+    default:
+      return 0.5;
+  }
+}
+
+function calculateTeamScore(model: AIModel, teamSize: string): number {
+  switch (teamSize) {
+    case 'individual':
+      return model.pricing.free ? 1 : 0.7;
+    case 'small-team':
+      return model.teamCollaboration ? 1 : 0.5;
+    case 'medium-team':
+      return model.teamCollaboration && model.pricing.subscription ? 1 : 0.4;
+    case 'large-team':
+      return model.teamCollaboration && model.pricing.subscription && 
+             model.pricing.subscription.some(s => typeof s.price === 'number' && s.price > 50) ? 1 : 0.3;
+    default:
+      return 0.5;
+  }
+}
+
+function calculateDataSensitivityScore(model: AIModel, sensitivity: string): number {
+  const privacyLevel = model.dataPrivacy.level;
+  
+  switch (sensitivity) {
+    case 'public':
+      return 1; // All models are fine
+    case 'internal':
+      return privacyLevel === 'high' ? 1 : privacyLevel === 'medium' ? 0.7 : 0.3;
+    case 'confidential':
+      return privacyLevel === 'high' ? 1 : privacyLevel === 'medium' ? 0.4 : 0;
+    case 'regulated':
+      return privacyLevel === 'high' ? 0.8 : 0; // Even high privacy may not be enough
+    default:
+      return 0.5;
+  }
+}
+
+function calculateLanguageScore(model: AIModel, languages: string[]): number {
+  const modelStrengths = model.strengths.join(' ').toLowerCase();
+  const useCases = model.useCases.join(' ').toLowerCase();
+  
+  // Check for multilingual capabilities
+  if (modelStrengths.includes('multilingual') || modelStrengths.includes('language')) {
+    return 1;
+  }
+  
+  // Check for translation capabilities
+  if (model.category === 'text' && (useCases.includes('translation') || model.name.toLowerCase().includes('translate'))) {
+    return 0.9;
+  }
+  
+  // Basic support for English
+  if (languages.length === 1 && languages[0] === 'english') {
+    return 0.8;
+  }
+  
+  return 0.3;
 }

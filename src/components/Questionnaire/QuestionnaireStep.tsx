@@ -23,6 +23,7 @@ interface QuestionnaireStepProps {
   isFirst?: boolean;
   isLast?: boolean;
   optional?: boolean;
+  maxSelections?: number;
 }
 
 export const QuestionnaireStep: React.FC<QuestionnaireStepProps> = ({
@@ -37,6 +38,7 @@ export const QuestionnaireStep: React.FC<QuestionnaireStepProps> = ({
   isFirst = false,
   isLast = false,
   optional = false,
+  maxSelections,
 }) => {
   const handleSingleChange = (newValue: string) => {
     onChange(newValue);
@@ -45,6 +47,10 @@ export const QuestionnaireStep: React.FC<QuestionnaireStepProps> = ({
   const handleMultipleChange = (optionValue: string, checked: boolean) => {
     const currentValues = Array.isArray(value) ? value : [];
     if (checked) {
+      if (maxSelections && currentValues.length >= maxSelections) {
+        // Don't add if max selections reached
+        return;
+      }
       onChange([...currentValues, optionValue]);
     } else {
       onChange(currentValues.filter(v => v !== optionValue));
