@@ -22,6 +22,11 @@ export async function generateRecommendations(preferences: UserPreferences): Pro
 }
 
 function filterEligibleModels(models: AIModel[], preferences: UserPreferences): AIModel[] {
+  // If comprehensive option is selected, return all models
+  if (preferences.primaryUseCase.includes('comprehensive')) {
+    return models;
+  }
+  
   return models.filter(model => {
     // Budget filter - hard constraint
     const budgetScore = calculateBudgetScore(model, preferences.budgetRange);
@@ -36,6 +41,8 @@ function filterEligibleModels(models: AIModel[], preferences: UserPreferences): 
 }
 
 function generateStaticRecommendations(models: AIModel[], preferences: UserPreferences): Recommendation[] {
+  const isComprehensive = preferences.primaryUseCase.includes('comprehensive');
+  
   const scoredModels = models.map(model => {
     let score = 0;
     const reasons: string[] = [];
@@ -43,8 +50,11 @@ function generateStaticRecommendations(models: AIModel[], preferences: UserPrefe
     // Use case matching (30 points max)
     const useCaseScore = calculateUseCaseScore(model, preferences.primaryUseCase);
     score += useCaseScore * 30;
-    if (useCaseScore > 0.7) {
-      reasons.push(`Excellent for ${preferences.primaryUseCase.join(', ')}`);
+    if (useCaseScore > 0.7 && !isComprehensive) {
+      reasons.push(`Excellent for ${preferences.primaryUseCase.filter(u => u !== 'comprehensive').join(', ')}`);
+    }
+    if (isComprehensive) {
+      reasons.push(`${model.category.charAt(0).toUpperCase() + model.category.slice(1)} AI tool`);
     }
 
     // Budget compatibility (25 points max)
@@ -97,14 +107,21 @@ function generateStaticRecommendations(models: AIModel[], preferences: UserPrefe
   });
 
   // Sort by score and return top recommendations
+  const isComprehensive = preferences.primaryUseCase.includes('comprehensive');
+  
   return scoredModels
     .sort((a, b) => b.score - a.score)
-    .filter(rec => rec.score > 40) // Only show decent matches
-    .slice(0, 10); // Top 10 recommendations
+    .filter(rec => isComprehensive ? rec.score > 20 : rec.score > 40) // Lower threshold for comprehensive
+    .slice(0, isComprehensive ? 30 : 10); // Show more results for comprehensive
 }
 
 function calculateUseCaseScore(model: AIModel, useCases: string[]): number {
   if (useCases.length === 0) return 0;
+  
+  // If comprehensive option is selected, give all models a moderate score
+  if (useCases.includes('comprehensive')) {
+    return 0.7;
+  }
   
   let matchCount = 0;
   const modelUseCases = model.useCases.join(' ').toLowerCase();

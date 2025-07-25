@@ -34,6 +34,11 @@ export const questions = [
         value: 'education',
         label: 'Learning & Education',
         description: 'Tutoring, explanations, homework help, courses'
+      },
+      {
+        value: 'comprehensive',
+        label: 'Comprehensive Exploration',
+        description: 'I want to see all available AI tools across all categories'
       }
     ]
   },

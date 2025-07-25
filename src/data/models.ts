@@ -1016,5 +1016,810 @@ export const aiModels: AIModel[] = [
     integrations: ['Enterprise tools', 'Custom integrations'],
     website: 'https://cohere.com',
     documentation: 'https://docs.cohere.com'
+  },
+
+  // Additional AI Tools for Comprehensive Coverage
+  
+  // Voice & Audio AI
+  {
+    id: 'elevenlabs',
+    vendor: 'ElevenLabs',
+    name: 'ElevenLabs Voice AI',
+    category: 'multimodal',
+    description: 'Realistic AI voice generation and cloning',
+    strengths: [
+      'Ultra-realistic voices',
+      'Voice cloning',
+      'Multiple languages',
+      'Emotion control',
+      'API access'
+    ],
+    useCases: [
+      'Audiobook creation',
+      'Video narration',
+      'Podcast production',
+      'Voice assistants',
+      'Language dubbing'
+    ],
+    pricing: {
+      free: {
+        name: 'Free',
+        price: 0,
+        features: ['10,000 characters/month', '3 custom voices'],
+        requests: 10000
+      },
+      subscription: [
+        {
+          name: 'Starter',
+          price: 5,
+          unit: 'month',
+          features: ['30,000 characters/month', '10 custom voices'],
+          requests: 30000
+        },
+        {
+          name: 'Creator',
+          price: 22,
+          unit: 'month',
+          features: ['100,000 characters/month', '30 custom voices'],
+          requests: 100000
+        }
+      ]
+    },
+    technicalRequirements: ['Internet connection'],
+    userInterfaceComplexity: 'simple',
+    apiAvailable: true,
+    mobileApp: false,
+    offlineCapabilities: false,
+    dataPrivacy: {
+      level: 'medium',
+      details: ['Voice data processing', 'GDPR compliant']
+    },
+    teamCollaboration: true,
+    customTraining: true,
+    releaseDate: '2022-01',
+    popularity: 85,
+    pros: [
+      'Best-in-class voice quality',
+      'Easy voice cloning',
+      'Good API',
+      'Reasonable pricing'
+    ],
+    cons: [
+      'Limited free tier',
+      'No offline mode',
+      'Processing time'
+    ],
+    integrations: ['API', 'Zapier'],
+    website: 'https://elevenlabs.io',
+    documentation: 'https://docs.elevenlabs.io'
+  },
+
+  // Video AI
+  {
+    id: 'runway',
+    vendor: 'Runway',
+    name: 'Runway Gen-2',
+    category: 'multimodal',
+    description: 'AI-powered video generation and editing',
+    strengths: [
+      'Text-to-video',
+      'Video editing AI',
+      'Image animation',
+      'Green screen',
+      'Multiple AI tools'
+    ],
+    useCases: [
+      'Video creation',
+      'Film production',
+      'Content creation',
+      'Animation',
+      'VFX'
+    ],
+    pricing: {
+      free: {
+        name: 'Basic',
+        price: 0,
+        features: ['125 credits', 'Limited exports'],
+        requests: 125
+      },
+      subscription: [
+        {
+          name: 'Standard',
+          price: 15,
+          unit: 'month',
+          features: ['625 credits/month', 'Upscaling'],
+          requests: 625
+        },
+        {
+          name: 'Pro',
+          price: 35,
+          unit: 'month',
+          features: ['2250 credits/month', 'All features'],
+          requests: 2250
+        }
+      ]
+    },
+    technicalRequirements: ['Modern browser', 'Good internet'],
+    userInterfaceComplexity: 'moderate',
+    apiAvailable: false,
+    mobileApp: true,
+    offlineCapabilities: false,
+    dataPrivacy: {
+      level: 'medium',
+      details: ['Content processing', 'Standard privacy']
+    },
+    teamCollaboration: true,
+    customTraining: false,
+    releaseDate: '2023-06',
+    popularity: 82,
+    pros: [
+      'Cutting-edge video AI',
+      'Multiple tools in one',
+      'Regular updates',
+      'Professional features'
+    ],
+    cons: [
+      'Credit system',
+      'Learning curve',
+      'Can be expensive'
+    ],
+    integrations: ['Adobe Premiere', 'Final Cut'],
+    website: 'https://runwayml.com',
+    documentation: 'https://help.runwayml.com'
+  },
+
+  // Music AI
+  {
+    id: 'suno',
+    vendor: 'Suno',
+    name: 'Suno AI',
+    category: 'multimodal',
+    description: 'AI music generation from text prompts',
+    strengths: [
+      'Full song generation',
+      'Lyrics creation',
+      'Multiple genres',
+      'Custom styles',
+      'Vocal generation'
+    ],
+    useCases: [
+      'Music production',
+      'Content creation',
+      'Game soundtracks',
+      'Podcast intros',
+      'Commercial music'
+    ],
+    pricing: {
+      free: {
+        name: 'Free',
+        price: 0,
+        features: ['50 credits/month', 'Non-commercial use'],
+        requests: 50
+      },
+      subscription: [
+        {
+          name: 'Pro',
+          price: 10,
+          unit: 'month',
+          features: ['2500 credits/month', 'Commercial use'],
+          requests: 2500
+        },
+        {
+          name: 'Premier',
+          price: 30,
+          unit: 'month',
+          features: ['10000 credits/month', 'Priority generation'],
+          requests: 10000
+        }
+      ]
+    },
+    technicalRequirements: ['Internet connection'],
+    userInterfaceComplexity: 'simple',
+    apiAvailable: false,
+    mobileApp: false,
+    offlineCapabilities: false,
+    dataPrivacy: {
+      level: 'medium',
+      details: ['Content rights', 'User generated content']
+    },
+    teamCollaboration: false,
+    customTraining: false,
+    releaseDate: '2023-12',
+    popularity: 78,
+    pros: [
+      'Impressive quality',
+      'Easy to use',
+      'Full songs with vocals',
+      'Many genres'
+    ],
+    cons: [
+      'Limited control',
+      'No API',
+      'Credit based'
+    ],
+    integrations: ['Web only'],
+    website: 'https://suno.ai',
+    documentation: 'https://suno.ai/about'
+  },
+
+  // Research & Academic AI
+  {
+    id: 'semantic-scholar',
+    vendor: 'Allen Institute',
+    name: 'Semantic Scholar',
+    category: 'text',
+    description: 'AI-powered research paper discovery and analysis',
+    strengths: [
+      'Academic search',
+      'Citation analysis',
+      'Paper summaries',
+      'Research trends',
+      'Free access'
+    ],
+    useCases: [
+      'Academic research',
+      'Literature review',
+      'Citation tracking',
+      'Research discovery',
+      'Paper analysis'
+    ],
+    pricing: {
+      free: {
+        name: 'Free',
+        price: 0,
+        features: ['Full access', 'API available'],
+        requests: -1
+      }
+    },
+    technicalRequirements: ['Internet connection'],
+    userInterfaceComplexity: 'simple',
+    apiAvailable: true,
+    mobileApp: false,
+    offlineCapabilities: false,
+    dataPrivacy: {
+      level: 'high',
+      details: ['Academic use', 'Open access']
+    },
+    teamCollaboration: false,
+    customTraining: false,
+    releaseDate: '2015-11',
+    popularity: 72,
+    pros: [
+      'Completely free',
+      'Powerful AI features',
+      'Large database',
+      'API access'
+    ],
+    cons: [
+      'Academic focus only',
+      'No general purpose AI'
+    ],
+    integrations: ['API', 'Browser extensions'],
+    website: 'https://semanticscholar.org',
+    documentation: 'https://api.semanticscholar.org'
+  },
+
+  // Presentation AI
+  {
+    id: 'gamma',
+    vendor: 'Gamma',
+    name: 'Gamma',
+    category: 'business',
+    description: 'AI-powered presentation and document creation',
+    strengths: [
+      'Auto-design',
+      'Content generation',
+      'Multiple formats',
+      'Real-time editing',
+      'Analytics'
+    ],
+    useCases: [
+      'Presentations',
+      'Pitch decks',
+      'Documents',
+      'Websites',
+      'Reports'
+    ],
+    pricing: {
+      free: {
+        name: 'Free',
+        price: 0,
+        features: ['400 AI credits', 'Basic features'],
+        requests: 400
+      },
+      subscription: [{
+        name: 'Plus',
+        price: 10,
+        unit: 'month',
+        features: ['Unlimited AI', 'Advanced features', 'Analytics'],
+        requests: -1
+      }]
+    },
+    technicalRequirements: ['Modern browser'],
+    userInterfaceComplexity: 'simple',
+    apiAvailable: false,
+    mobileApp: false,
+    offlineCapabilities: false,
+    dataPrivacy: {
+      level: 'medium',
+      details: ['Standard privacy', 'Cloud storage']
+    },
+    teamCollaboration: true,
+    customTraining: false,
+    releaseDate: '2022-11',
+    popularity: 76,
+    pros: [
+      'Beautiful designs',
+      'Fast creation',
+      'Multiple formats',
+      'Easy to use'
+    ],
+    cons: [
+      'Limited customization',
+      'No API',
+      'Credit system'
+    ],
+    integrations: ['Export to PowerPoint', 'PDF'],
+    website: 'https://gamma.app',
+    documentation: 'https://help.gamma.app'
+  },
+
+  // Translation AI
+  {
+    id: 'deepl',
+    vendor: 'DeepL',
+    name: 'DeepL Translator',
+    category: 'text',
+    description: 'Advanced AI translation with nuanced understanding',
+    strengths: [
+      'Superior translation quality',
+      'Context awareness',
+      'Document translation',
+      'API access',
+      'Multiple languages'
+    ],
+    useCases: [
+      'Document translation',
+      'Business communication',
+      'Academic translation',
+      'Website localization',
+      'Real-time translation'
+    ],
+    pricing: {
+      free: {
+        name: 'Free',
+        price: 0,
+        features: ['Limited translations', 'Basic features'],
+        requests: 5000
+      },
+      subscription: [
+        {
+          name: 'Pro',
+          price: 8.99,
+          unit: 'month',
+          features: ['Unlimited translation', 'Document translation', 'API'],
+          requests: -1
+        },
+        {
+          name: 'Business',
+          price: 30,
+          unit: 'user/month',
+          features: ['Team features', 'SSO', 'Priority support'],
+          requests: -1
+        }
+      ]
+    },
+    technicalRequirements: ['Internet connection'],
+    userInterfaceComplexity: 'simple',
+    apiAvailable: true,
+    mobileApp: true,
+    offlineCapabilities: false,
+    dataPrivacy: {
+      level: 'high',
+      details: ['EU servers', 'GDPR compliant', 'No training on user data']
+    },
+    teamCollaboration: true,
+    customTraining: false,
+    releaseDate: '2017-08',
+    popularity: 88,
+    pros: [
+      'Best translation quality',
+      'Fast and reliable',
+      'Privacy focused',
+      'Good API'
+    ],
+    cons: [
+      'Fewer languages than Google',
+      'More expensive',
+      'Limited free tier'
+    ],
+    integrations: ['API', 'CAT tools', 'Browser extensions'],
+    website: 'https://deepl.com',
+    documentation: 'https://developers.deepl.com'
+  },
+
+  // 3D AI
+  {
+    id: 'spline-ai',
+    vendor: 'Spline',
+    name: 'Spline AI',
+    category: 'creative',
+    description: 'AI-powered 3D design and animation',
+    strengths: [
+      'Text to 3D',
+      'AI textures',
+      'Animation assistance',
+      'Web-based',
+      'Real-time collaboration'
+    ],
+    useCases: [
+      '3D web design',
+      'Product visualization',
+      'Game assets',
+      'Interactive experiences',
+      'Prototyping'
+    ],
+    pricing: {
+      free: {
+        name: 'Free',
+        price: 0,
+        features: ['Basic features', '1 project'],
+        requests: 1
+      },
+      subscription: [
+        {
+          name: 'Super',
+          price: 9,
+          unit: 'month',
+          features: ['Unlimited projects', 'AI features'],
+          requests: -1
+        },
+        {
+          name: 'Teams',
+          price: 49,
+          unit: 'month',
+          features: ['Team collaboration', 'Advanced features'],
+          requests: -1
+        }
+      ]
+    },
+    technicalRequirements: ['Modern browser', 'WebGL support'],
+    userInterfaceComplexity: 'moderate',
+    apiAvailable: false,
+    mobileApp: false,
+    offlineCapabilities: false,
+    dataPrivacy: {
+      level: 'medium',
+      details: ['Cloud-based', 'Standard privacy']
+    },
+    teamCollaboration: true,
+    customTraining: false,
+    releaseDate: '2023-10',
+    popularity: 73,
+    pros: [
+      'No 3D experience needed',
+      'Web-based',
+      'AI assistance',
+      'Great for web'
+    ],
+    cons: [
+      'Limited compared to pro tools',
+      'Internet required',
+      'Learning curve'
+    ],
+    integrations: ['Web export', 'React'],
+    website: 'https://spline.design',
+    documentation: 'https://docs.spline.design'
+  },
+
+  // Data Analysis AI
+  {
+    id: 'julius-ai',
+    vendor: 'Julius',
+    name: 'Julius AI',
+    category: 'text',
+    description: 'AI data analyst for spreadsheets and data visualization',
+    strengths: [
+      'Natural language queries',
+      'Auto visualization',
+      'Statistical analysis',
+      'Code generation',
+      'Multiple file formats'
+    ],
+    useCases: [
+      'Data analysis',
+      'Report generation',
+      'Statistical modeling',
+      'Data visualization',
+      'Research'
+    ],
+    pricing: {
+      free: {
+        name: 'Free',
+        price: 0,
+        features: ['15 messages/month', 'Basic features'],
+        requests: 15
+      },
+      subscription: [{
+        name: 'Essential',
+        price: 20,
+        unit: 'month',
+        features: ['250 messages/month', 'Advanced analysis'],
+        requests: 250
+      }]
+    },
+    technicalRequirements: ['Internet connection'],
+    userInterfaceComplexity: 'simple',
+    apiAvailable: false,
+    mobileApp: false,
+    offlineCapabilities: false,
+    dataPrivacy: {
+      level: 'medium',
+      details: ['Data processing', 'Secure storage']
+    },
+    teamCollaboration: false,
+    customTraining: false,
+    releaseDate: '2023-01',
+    popularity: 71,
+    pros: [
+      'No coding required',
+      'Powerful analysis',
+      'Good visualizations',
+      'Supports many formats'
+    ],
+    cons: [
+      'Limited free tier',
+      'No API',
+      'Online only'
+    ],
+    integrations: ['CSV', 'Excel', 'Google Sheets'],
+    website: 'https://julius.ai',
+    documentation: 'https://julius.ai/docs'
+  },
+  
+  // Additional comprehensive AI tools
+  {
+    id: 'adobe-firefly',
+    vendor: 'Adobe',
+    name: 'Adobe Firefly',
+    category: 'image',
+    description: 'AI-powered creative tools integrated into Adobe Creative Cloud',
+    strengths: [
+      'Professional integration with Adobe apps',
+      'Commercial-safe image generation',
+      'Advanced editing features',
+      'Text effects and styling',
+      'Generative fill and expand'
+    ],
+    useCases: [
+      'Professional design work',
+      'Marketing materials',
+      'Photo editing and enhancement',
+      'Brand content creation'
+    ],
+    pricing: {
+      subscription: [{
+        name: 'Creative Cloud',
+        price: 54.99,
+        unit: 'month',
+        features: ['All Adobe apps', 'Firefly integration', '100GB storage'],
+        tokens: 1000
+      }]
+    },
+    technicalRequirements: ['Adobe Creative Cloud subscription'],
+    userInterfaceComplexity: 'moderate',
+    apiAvailable: false,
+    mobileApp: true,
+    offlineCapabilities: false,
+    dataPrivacy: {
+      level: 'medium',
+      details: ['Commercial-safe content', 'Enterprise options available']
+    },
+    teamCollaboration: true,
+    customTraining: false,
+    releaseDate: '2023-03',
+    popularity: 85,
+    pros: [
+      'Adobe ecosystem integration',
+      'Commercial use safe',
+      'Professional features',
+      'Regular updates'
+    ],
+    cons: [
+      'Expensive subscription',
+      'Requires Creative Cloud',
+      'Learning curve'
+    ],
+    integrations: ['Adobe Photoshop', 'Adobe Illustrator', 'Adobe Express'],
+    website: 'https://www.adobe.com/products/firefly.html',
+    documentation: 'https://helpx.adobe.com/firefly/get-started.html'
+  },
+  {
+    id: 'leonardo-ai',
+    vendor: 'Leonardo.ai',
+    name: 'Leonardo AI',
+    category: 'image',
+    description: 'AI art generation platform with fine-tuned models for game assets and concept art',
+    strengths: [
+      'Game asset generation',
+      'Fine-tuned style models',
+      'Consistent character generation',
+      'High-quality outputs',
+      'Canvas editor'
+    ],
+    useCases: [
+      'Game development assets',
+      'Concept art creation',
+      'Character design',
+      'Marketing visuals'
+    ],
+    pricing: {
+      free: {
+        name: 'Free',
+        price: 0,
+        features: ['150 tokens daily', 'Public images'],
+        tokens: 150
+      },
+      subscription: [{
+        name: 'Apprentice',
+        price: 10,
+        unit: 'month',
+        features: ['8,500 tokens monthly', 'Private generation'],
+        tokens: 8500
+      }]
+    },
+    technicalRequirements: ['Internet connection'],
+    userInterfaceComplexity: 'moderate',
+    apiAvailable: true,
+    mobileApp: false,
+    offlineCapabilities: false,
+    dataPrivacy: {
+      level: 'medium',
+      details: ['User data stored', 'Private generation available']
+    },
+    teamCollaboration: false,
+    customTraining: true,
+    releaseDate: '2022-12',
+    popularity: 75,
+    pros: [
+      'Great for game art',
+      'Custom models',
+      'Good quality',
+      'Affordable'
+    ],
+    cons: [
+      'Token system',
+      'No mobile app',
+      'Limited collaboration'
+    ],
+    integrations: ['API'],
+    website: 'https://leonardo.ai',
+    documentation: 'https://docs.leonardo.ai'
+  },
+  {
+    id: 'airtable-ai',
+    vendor: 'Airtable',
+    name: 'Airtable AI',
+    category: 'business',
+    description: 'AI-powered database and workflow automation platform',
+    strengths: [
+      'Database with AI features',
+      'Workflow automation',
+      'Team collaboration',
+      'Custom apps',
+      'Integration ecosystem'
+    ],
+    useCases: [
+      'Project management',
+      'Content calendars',
+      'CRM systems',
+      'Inventory tracking',
+      'Workflow automation'
+    ],
+    pricing: {
+      free: {
+        name: 'Free',
+        price: 0,
+        features: ['Up to 5 creators', '1,000 records per base'],
+        requests: 1000
+      },
+      subscription: [{
+        name: 'Team',
+        price: 20,
+        unit: 'month',
+        features: ['50,000 records', 'Advanced features'],
+        tokens: 50000
+      }]
+    },
+    technicalRequirements: ['Internet connection'],
+    userInterfaceComplexity: 'moderate',
+    apiAvailable: true,
+    mobileApp: true,
+    offlineCapabilities: false,
+    dataPrivacy: {
+      level: 'high',
+      details: ['SOC 2 certified', 'GDPR compliant']
+    },
+    teamCollaboration: true,
+    customTraining: false,
+    releaseDate: '2020-09',
+    popularity: 80,
+    pros: [
+      'Flexible database',
+      'Great integrations',
+      'Team features',
+      'Mobile apps'
+    ],
+    cons: [
+      'Learning curve',
+      'Can get expensive',
+      'Performance at scale'
+    ],
+    integrations: ['Zapier', 'Slack', 'Google Workspace'],
+    website: 'https://airtable.com',
+    documentation: 'https://airtable.com/developers'
+  },
+  {
+    id: 'descript',
+    vendor: 'Descript',
+    name: 'Descript',
+    category: 'multimodal',
+    description: 'AI-powered audio and video editing platform with transcription',
+    strengths: [
+      'Edit video by editing text',
+      'AI voice cloning',
+      'Automatic transcription',
+      'Podcast editing',
+      'Screen recording'
+    ],
+    useCases: [
+      'Podcast production',
+      'Video editing',
+      'Content creation',
+      'Meeting recordings',
+      'Educational content'
+    ],
+    pricing: {
+      free: {
+        name: 'Free',
+        price: 0,
+        features: ['3 hours transcription', 'Basic editing'],
+        requests: 3
+      },
+      subscription: [{
+        name: 'Creator',
+        price: 12,
+        unit: 'month',
+        features: ['10 hours/month', 'AI features'],
+        tokens: 10
+      }]
+    },
+    technicalRequirements: ['Desktop app', 'Internet connection'],
+    userInterfaceComplexity: 'simple',
+    apiAvailable: false,
+    mobileApp: false,
+    offlineCapabilities: false,
+    dataPrivacy: {
+      level: 'medium',
+      details: ['Content processed for AI features']
+    },
+    teamCollaboration: true,
+    customTraining: false,
+    releaseDate: '2019-12',
+    popularity: 70,
+    pros: [
+      'Revolutionary editing',
+      'Great for podcasts',
+      'Easy to use',
+      'Good AI features'
+    ],
+    cons: [
+      'Desktop only',
+      'Processing time',
+      'Limited free tier'
+    ],
+    integrations: ['YouTube', 'Podcast platforms'],
+    website: 'https://www.descript.com',
+    documentation: 'https://help.descript.com'
   }
 ];

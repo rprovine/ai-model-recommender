@@ -9,9 +9,11 @@ import { generateRecommendations } from '@/utils/recommendation-engine';
 function App() {
   const [currentView, setCurrentView] = useState<'questionnaire' | 'results' | 'loading'>('questionnaire');
   const [recommendations, setRecommendations] = useState<Recommendation[]>([]);
+  const [userPreferences, setUserPreferences] = useState<UserPreferences | null>(null);
 
   const handleQuestionnaireComplete = async (preferences: UserPreferences) => {
     setCurrentView('loading');
+    setUserPreferences(preferences);
     try {
       const recs = await generateRecommendations(preferences);
       setRecommendations(recs);
@@ -26,6 +28,7 @@ function App() {
   const handleStartOver = () => {
     setCurrentView('questionnaire');
     setRecommendations([]);
+    setUserPreferences(null);
   };
 
   return (
@@ -37,8 +40,8 @@ function App() {
         {currentView === 'loading' && (
           <LoadingScreen />
         )}
-        {currentView === 'results' && (
-          <Results recommendations={recommendations} onBack={handleStartOver} />
+        {currentView === 'results' && userPreferences && (
+          <Results recommendations={recommendations} preferences={userPreferences} onBack={handleStartOver} />
         )}
       </div>
       <Footer />

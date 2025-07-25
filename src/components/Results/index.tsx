@@ -1,16 +1,17 @@
 import React, { useState } from 'react';
 import { ModelCard } from '@/components/ModelCard';
 import { FilterSidebar } from './FilterSidebar';
-import type { Recommendation } from '@/types';
+import type { Recommendation, UserPreferences } from '@/types';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft, Download, Share2 } from 'lucide-react';
 
 interface ResultsProps {
   recommendations: Recommendation[];
+  preferences: UserPreferences;
   onBack: () => void;
 }
 
-export const Results: React.FC<ResultsProps> = ({ recommendations, onBack }) => {
+export const Results: React.FC<ResultsProps> = ({ recommendations, preferences, onBack }) => {
   const [expandedCards, setExpandedCards] = useState<Set<string>>(new Set());
   const [filteredRecommendations, setFilteredRecommendations] = useState(recommendations);
 
@@ -75,10 +76,12 @@ export const Results: React.FC<ResultsProps> = ({ recommendations, onBack }) => 
         <div className="flex justify-between items-center mb-8">
           <div>
             <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
-              Your AI Tool Recommendations
+              {preferences.primaryUseCase.includes('comprehensive') ? 'Comprehensive AI Tool Directory' : 'Your AI Tool Recommendations'}
             </h1>
             <p className="text-muted-foreground mt-2">
-              Based on your preferences, we found {recommendations.length} great matches
+              {preferences.primaryUseCase.includes('comprehensive') 
+                ? `Explore ${recommendations.length} AI tools across all categories`
+                : `Based on your preferences, we found ${recommendations.length} great matches`}
             </p>
           </div>
           <div className="flex gap-2">
